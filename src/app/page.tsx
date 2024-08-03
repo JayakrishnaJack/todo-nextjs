@@ -12,9 +12,12 @@ export default async function Home() {
           Add New
         </Link>
       </div>
-      <ul className="w-full px-6 p-y2">
+      <ul className="max-w-md px-6 p-y2">
         {res.map((res) => (
-          <li key={res.id} className="">
+          <li
+            key={res.id}
+            className="w-full border rounded border-gray-200 p-4"
+          >
             {res.title}
           </li>
         ))}
