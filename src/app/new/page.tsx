@@ -1,4 +1,3 @@
-import { prisma } from "@/db";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -8,7 +7,13 @@ async function addTodo(data: FormData) {
   if (typeof title !== "string" || title.length === 0) {
     throw new Error("Invalid Title");
   }
-  await prisma.todo.create({ data: { title, complete: false } });
+  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ title, complete: false }),
+  });
   redirect("/");
 }
 

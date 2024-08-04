@@ -1,8 +1,15 @@
-import { prisma } from "@/db";
 import Link from "next/link";
 
+interface Todo {
+  id: string;
+  title: string;
+  complete: boolean;
+}
+
 export default async function Home() {
-  const res = await prisma.todo.findMany({});
+  const res: Todo[] = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api`, {
+    cache: "no-store",
+  }).then(async (res) => await res.json());
 
   return (
     <div>
@@ -12,7 +19,7 @@ export default async function Home() {
           Add New
         </Link>
       </div>
-      <ul className="max-w-md px-6 p-y2">
+      <ul className="px-6 p-y2 m-4 h-[87vh] overflow-y-scroll space-y-2">
         {res.map((res) => (
           <li
             key={res.id}
