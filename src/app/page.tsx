@@ -1,3 +1,4 @@
+import ActionButtons from "@/components/ActionButtons";
 import Link from "next/link";
 
 interface Todo {
@@ -7,7 +8,7 @@ interface Todo {
 }
 
 export default async function Home() {
-  const res: Todo[] = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api`, {
+  const list: Todo[] = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api`, {
     cache: "no-store",
   }).then(async (res) => await res.json());
 
@@ -19,13 +20,16 @@ export default async function Home() {
           Add New
         </Link>
       </div>
-      <ul className="px-6 p-y2 m-4 h-[87vh] overflow-y-scroll space-y-2">
-        {res.map((res) => (
+      <ul className="px-6 p-y2 m-4 h-[87dvh] overflow-y-scroll space-y-2">
+        {list.map((item) => (
           <li
-            key={res.id}
+            key={item.id}
             className="w-full border rounded border-gray-200 p-4"
           >
-            {res.title}
+            <div className="flex justify-between">
+              <label>{item.title}</label>
+              <ActionButtons item={item} />
+            </div>
           </li>
         ))}
       </ul>
